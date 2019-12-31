@@ -11,15 +11,15 @@ int parseLine(const char *line, command_t *cmd) {
         cmd->type = CMDTYPE_HINT;
         return 1;
     }
-    if (sscanf(line, "validate") == 0) {
+    if (!strncmp("validate", line, 8)) {
         cmd->type = CMDTYPE_VALIDATE;
         return 1;
     }
-    if (sscanf(line, "restart") == 0) {
+    if (!strncmp("restart", line, 7)) {
         cmd->type = CMDTYPE_RESTART;
         return 1;
     }
-    if (sscanf(line, "exit") == 0) {
+    if (!strncmp("exit", line, 4)) {
         cmd->type = CMDTYPE_EXIT;
         return 1;
     }

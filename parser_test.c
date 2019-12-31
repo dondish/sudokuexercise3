@@ -30,5 +30,8 @@ int main()
     assert(parseLine(line, &cmd));
     assert(cmd.type == CMDTYPE_EXIT);
 
+    line = "fake";
+    assert(!parseLine(line, &cmd));
+
     return 0;
 }
