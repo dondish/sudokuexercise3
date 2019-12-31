@@ -3,9 +3,6 @@
 #include<stdio.h>
 #define DASHLINE "----------------------------------\n"
 
-/*
-Initializes all of the cells to 0
-*/
 void init_board(game_state_t *state) {
     int x, y;
     for (y = 0; y < BOARDSIZE; y++) {
@@ -16,9 +13,6 @@ void init_board(game_state_t *state) {
     }
 }
 
-/*
-Writes the structure of the board to the string given. 
-*/
 void print_board(const game_state_t *state, char *res) {
     int x, y;
     cell_t cell;
