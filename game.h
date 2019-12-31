@@ -18,7 +18,6 @@ Initializes all of the cells to 0
 */
 void init_board(game_state_t *state);
 
-
 /*
 Writes the structure of the board to the string given. 
 */
