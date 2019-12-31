@@ -17,7 +17,7 @@
 *.pch
 
 # Libraries
-*.lib
+*.libp
 *.a
 *.la
 *.lo
@@ -41,6 +41,12 @@
 *.su
 *.idb
 *.pdb
+
+# Tests
+*_test
+
+# VSCode
+.vscode/
 
 # Kernel Module Compile Results
 *.mod*

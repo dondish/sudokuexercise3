@@ -11,4 +11,6 @@ typedef struct game_state {
     cell_t *board[BOARDSIZE][BOARDSIZE];
 } game_state_t;
 
+char *print_board(game_state_t *state);
+
 #endif
