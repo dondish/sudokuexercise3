@@ -8,6 +8,9 @@ all: $(EXEC)
 parser_test: parser_test.c parser.h parser.o
 	$(CC) $(CFLAGS) parser_test.c parser.o -o parser_test
 
+game_test: game_test.c game.h game.o
+	$(CC) $(CFLAGS) game_test.c game.o -o game_test
+
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) -o $@
 

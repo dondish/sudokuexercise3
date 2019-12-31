@@ -3,14 +3,16 @@
 #define BOARDSIZE 9
 
 typedef struct cell {
-    int fixed: 1;
-    int value: 4;
+    unsigned int fixed: 1;
+    unsigned int value: 4;
 } cell_t;
 
 typedef struct game_state {
-    cell_t *board[BOARDSIZE][BOARDSIZE];
+    cell_t board[BOARDSIZE][BOARDSIZE];
 } game_state_t;
 
-char *print_board(game_state_t *state);
+void init_board(game_state_t *state);
+
+void print_board(const game_state_t *state, char *res);
 
 #endif
