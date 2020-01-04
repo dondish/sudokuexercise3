@@ -56,3 +56,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+sudoku
+parser_test
+game_test
+solver_test
