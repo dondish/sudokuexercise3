@@ -84,6 +84,7 @@ void process_command(game_state_t *state, char *line) {
 
         case CMDTYPE_RESTART:
             initialize(state);
+            print_board(&state->board_state);
             break;
 
         case CMDTYPE_EXIT:
