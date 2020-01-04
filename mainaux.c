@@ -13,6 +13,7 @@ void initialize(game_state_t *state) {
         printf("Exiting...\n");
         exit(0);
     }
+    getchar();
     while (cells < 0 || cells > 80)
     {
         printf("Error: invalid number of cells to fill (should be between 0 and 80)\n");
@@ -21,6 +22,7 @@ void initialize(game_state_t *state) {
             printf("Exiting...\n");
             exit(0);
         }
+        getchar();
     }
     generate(state, cells);
 }
@@ -30,6 +32,7 @@ void process_command(game_state_t *state, char *line) {
     int temp;
     
     if (parse_line(line, &cmd)) {
+
         switch (cmd.type)
         {
         case CMDTYPE_SET:
@@ -37,18 +40,26 @@ void process_command(game_state_t *state, char *line) {
                 printf("Error: invalid command\n");
                 return;
             }
-            if (state->board_state.board[cmd.Y][cmd.X].fixed) {
+            if (state->board_state.board[cmd.Y-1][cmd.X-1].fixed) {
                 printf("Error: cell is fixed\n");
                 return;
             }
-            temp = state->board_state.board[cmd.Y][cmd.X].value;
-            state->board_state.board[cmd.Y][cmd.X].value = cmd.Z;
+            
+            temp = state->board_state.board[cmd.Y-1][cmd.X-1].value;
+            state->board_state.board[cmd.Y-1][cmd.X-1].value = cmd.Z;
+            
             if (!is_legal(&state->board_state)) {
                 printf("Error: value is invalid\n");
-                state->board_state.board[cmd.Y][cmd.X].value = temp;
-            } else if (is_finished(&state->board_state)) {
-                printf("Puzzle solved successfully\n");
+                state->board_state.board[cmd.Y-1][cmd.X-1].value = temp;
+                break;
             }
+            
+            if (is_finished(&state->board_state)) {
+                printf("Puzzle solved successfully\n");
+                break;
+            }
+            
+            print_board(&state->board_state);
             
             break;
         
@@ -57,7 +68,7 @@ void process_command(game_state_t *state, char *line) {
                 printf("Error: invalid command\n");
                 return;
             }
-            printf("Hint: set cell to %d\n", state->solution.board[cmd.Y][cmd.X].value);
+            printf("Hint: set cell to %d\n", state->solution.board[cmd.Y-1][cmd.X-1].value);
             break;
 
         case CMDTYPE_VALIDATE:
@@ -84,5 +95,7 @@ void process_command(game_state_t *state, char *line) {
         default:
             break;
         }
+    } else {
+        printf("Error: invalid command\n");
     }
 }

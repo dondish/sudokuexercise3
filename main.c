@@ -1,4 +1,5 @@
 #include "mainaux.h"
+#include "game.h"
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -15,6 +16,7 @@ int main(int argc, char const *argv[])
     }
 
     initialize(&state);
+    print_board(&state.board_state);
     while (1)
     {
         if (fgets(line, 1024, stdin) == NULL) {
