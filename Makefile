@@ -16,7 +16,7 @@ solver_test: solver_test.c solver.h solver.o game.h game.o
 	$(CC) $(CFLAGS) solver_test.c solver.o game.o -o solver_test
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@
+	$(CC) $(OBJS) -o $@
 
 main.o: main.c mainaux.h game.h parser.h solver.h
 	$(CC) $(CFLAGS) -c $*.c
