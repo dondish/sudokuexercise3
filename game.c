@@ -91,12 +91,14 @@ int is_legal(board_state_t *state) {
 
 void sprint_board(const board_state_t *state, char *res) {
     int x, y;
-    cell_t cell;
+
     for (y = 0; y < BOARDSIZE; y++) {
         if (y % SQRT_BOARDSIZE == 0) {
             strcat(res, DASHLINE);
         }
         for (x = 0; x < BOARDSIZE; x++) {
+            cell_t cell;
+
             if (x % SQRT_BOARDSIZE == 0) {
                 strcat(res, "| ");
             }
