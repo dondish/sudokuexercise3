@@ -3,7 +3,9 @@ CC = gcc
 EXEC = sudoku
 CFLAGS = -g -ansi -Wall -Wextra -Werror -pedantic-errors
 
-all: $(EXEC)
+
+all: $(EXEC) parser_test game_test solver_test
+
 
 parser_test: parser_test.c parser.h parser.o
 	$(CC) $(CFLAGS) parser_test.c parser.o -o parser_test
@@ -11,9 +13,9 @@ parser_test: parser_test.c parser.h parser.o
 game_test: game_test.c game.h game.o
 	$(CC) $(CFLAGS) game_test.c game.o -o game_test
 
-
 solver_test: solver_test.c solver.h solver.o game.h game.o
 	$(CC) $(CFLAGS) solver_test.c solver.o game.o -o solver_test
+
 
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@
