@@ -5,9 +5,9 @@
 #include<stdlib.h>
 
 void initialize(game_state_t *state) {
+    int cells;
     init_board(&state->board_state);
     init_board(&state->solution);
-    int cells;
     printf("Please enter the number of cells to fill [0-80]:\n");
     if (scanf("%d", &cells) == EOF) {
         printf("Exiting...\n");
