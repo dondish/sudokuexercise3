@@ -26,6 +26,6 @@ typedef struct command {
     Parses a line and returns the matching command
     returns a boolean on whether the command is valid
 */
-int parseLine(const char *line, command_t *cmd);
+int parse_line(const char *line, command_t *cmd);
 
 #endif

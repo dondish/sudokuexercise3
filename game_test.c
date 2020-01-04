@@ -1,6 +1,5 @@
 #include "game.h"
 #include<string.h>
-#include<stdio.h>
 #include<assert.h>
 char board[] = "----------------------------------\n\
 |    .6    |          |       .5 |\n\
@@ -18,7 +17,7 @@ char board[] = "----------------------------------\n\
 
 int main()
 {
-    game_state_t state;
+    board_state_t state;
     char res[1024] = {0};
     int x,y;
     init_board(&state);
@@ -46,8 +45,9 @@ int main()
     state.board[6][6].value = 5;
     state.board[8][1].fixed = 1;
     state.board[8][1].value = 9;
-    print_board(&state, res);
-    assert(strcmp(res, board) == 0);
+    print_board(&state);
+    sprint_board(&state, res);
+    assert(!strcmp(res, board));
 
     /* Validate the board */
 

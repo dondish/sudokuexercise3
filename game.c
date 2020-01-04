@@ -3,7 +3,7 @@
 #include<stdio.h>
 #define DASHLINE "----------------------------------\n"
 
-void init_board(game_state_t *state) {
+void init_board(board_state_t *state) {
     int x, y;
     for (y = 0; y < BOARDSIZE; y++) {
         for (x = 0; x < BOARDSIZE; x++) {
@@ -13,7 +13,19 @@ void init_board(game_state_t *state) {
     }
 }
 
-int is_legal(game_state_t *state) {
+int is_finished(board_state_t *state) {
+    int x, y;
+    for (y = 0; y < BOARDSIZE; y++) {
+        for (x = 0; x < BOARDSIZE; x++) {
+            if (state->board[y][x].value == 0) {
+                return 0;
+            }
+        }
+    }
+    return is_legal(state);
+}
+
+int is_legal(board_state_t *state) {
     int checker[BOARDSIZE] = {0};
     int x,y;
     for (x=0;x<BOARDSIZE;x++) { /* columns */
@@ -64,7 +76,8 @@ int is_legal(game_state_t *state) {
                                      0 1 2
                                 */
         for (y=0;y<BOARDSIZE;y++) {
-            if (state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value && (checker[x] & (1 << state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value))) {
+            if (state->board[(x-(x%SQRT_BOARDSIZE))+(y-(y%SQRT_BOARDSIZE))/SQRT_BOARDSIZE][(x%SQRT_BOARDSIZE)*SQRT_BOARDSIZE+y%SQRT_BOARDSIZE].value 
+            && (checker[x] & (1 << state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value))) {
                 return 0;
             }
             checker[x] |= (1 << state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value);
@@ -73,15 +86,15 @@ int is_legal(game_state_t *state) {
     return 1;
 }
 
-void print_board(const game_state_t *state, char *res) {
+void sprint_board(const board_state_t *state, char *res) {
     int x, y;
     cell_t cell;
     for (y = 0; y < BOARDSIZE; y++) {
-        if (y % 3 == 0) {
+        if (y % SQRT_BOARDSIZE == 0) {
             strcat(res, DASHLINE);
         }
         for (x = 0; x < BOARDSIZE; x++) {
-            if (x % 3 == 0) {
+            if (x % SQRT_BOARDSIZE == 0) {
                 strcat(res, "| ");
             }
             cell = state->board[y][x];
@@ -100,4 +113,10 @@ void print_board(const game_state_t *state, char *res) {
         strcat(res, "|\n");
     }
     strcat(res, DASHLINE);
+}
+
+void print_board(const board_state_t *state) {
+    char res[1024] = {0};
+    sprint_board(state, res);
+    printf("%s", res);
 }

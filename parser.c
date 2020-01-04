@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 
-int parseLine(const char *line, command_t *cmd) {
+int parse_line(const char *line, command_t *cmd) {
     char buf[9];
     if (sscanf(line, " set %d %d %d", &cmd->X, &cmd->Y, &cmd->Z) == 3) {
         cmd->type = CMDTYPE_SET;
