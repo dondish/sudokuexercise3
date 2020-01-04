@@ -48,5 +48,14 @@ int main()
     state.board[8][1].value = 9;
     print_board(&state, res);
     assert(strcmp(res, board) == 0);
+
+    /* Validate the board */
+
+    assert(is_legal(&state));
+    state.board[0][2].value = 6;
+    assert(!is_legal(&state));
+    state.board[0][2].value = 0;
+    state.board[1][1].value = 6;
+    assert(!is_legal(&state));
     return 0;
 }

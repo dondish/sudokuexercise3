@@ -19,6 +19,11 @@ Initializes all of the cells to 0
 void init_board(game_state_t *state);
 
 /*
+Returns whether the board is legal.
+*/
+int is_legal(game_state_t *state);
+
+/*
 Writes the structure of the board to the string given. 
 */
 void print_board(const game_state_t *state, char *res);
