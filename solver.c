@@ -24,6 +24,8 @@ static void copy_as_fixed(board_state_t* to, board_state_t* from) {
 /* 
 Gather all candidates for column x, row y on the board in ascending order,
 storing the result to `candidates`. Returns the number of candidates.
+Note: this function does not attempt to clean up modifications to the board at
+position (x, y).
 */
 static int gather_candidates(board_state_t* state, int x, int y, int* candidates) {
     int candidate_count = 0;
@@ -101,6 +103,8 @@ static int backtrack_rec(board_state_t *state, int x, int y, candidate_selector_
         remove_candidate(candidates, candidate_idx, candidate_count);
         candidate_count--;
     }
+
+    state->board[y][x].value = 0;
     
     return 0;
 }
