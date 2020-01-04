@@ -2,6 +2,7 @@
 #include "game.h"
 #include<assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main()
 {
@@ -40,20 +41,14 @@ int main()
     }
     print_board(&game.solution);
 
-    init_board(&game.board_state);
-    init_board(&game.solution);
-    game.board_state.board[0][1].fixed = 1;
-    game.board_state.board[0][1].value = 6;
-    game.board_state.board[0][8].fixed = 1;
-    game.board_state.board[0][8].value = 5;
-    game.board_state.board[1][4].fixed = 1;
-    game.board_state.board[1][4].value = 6;
-    game.board_state.board[2][8].fixed = 1;
-    game.board_state.board[2][8].value = 2;
-    game.board_state.board[3][7].fixed = 1;
-    game.board_state.board[3][7].value = 6;
-    game.board_state.board[7][6].fixed = 1;
-    game.board_state.board[7][6].value = 6;
+    memcpy(&game.board_state, &game.solution, sizeof(board_state_t));
+    game.board_state.board[8][8].value = 5;
+    game.board_state.board[8][3].value = 0;
+    game.board_state.board[8][3].fixed = 0;
+    game.board_state.board[0][8].value = 0;
+    game.board_state.board[0][8].fixed = 0;
+    game.board_state.board[6][6].value = 0;
+    game.board_state.board[6][6].fixed = 0;
     print_board(&game.board_state);
 
     assert(is_legal(&game.board_state));
