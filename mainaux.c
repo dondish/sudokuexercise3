@@ -53,13 +53,12 @@ void process_command(game_state_t *state, char *line) {
                 state->board_state.board[cmd.Y-1][cmd.X-1].value = temp;
                 break;
             }
+
+            print_board(&state->board_state);
             
             if (is_finished(&state->board_state)) {
                 printf("Puzzle solved successfully\n");
-                break;
             }
-            
-            print_board(&state->board_state);
             
             break;
         
