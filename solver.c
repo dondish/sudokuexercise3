@@ -8,8 +8,8 @@ Copy all guessed values as fixed from a board to another
 */
 static void copy_as_fixed(board_state_t* to, board_state_t* from) {
     int x,y;
-    for (x=0;x<BOARDSIZE;x++) {
-        for (y=0;y<BOARDSIZE;y++) {
+    for (x=0; x<BOARDSIZE; x++) {
+        for (y=0; y<BOARDSIZE; y++) {
             if (from->board[x][y].value > 0) {
                 to->board[x][y].fixed = 1;
             } else {
@@ -21,20 +21,18 @@ static void copy_as_fixed(board_state_t* to, board_state_t* from) {
 }
 
 /* 
-Gather all candidates for position (x, y) on the board in ascending order,
+Gather all candidates for column x, row y on the board in ascending order,
 storing the result to `candidates`. Returns the number of candidates.
 */
 static int gather_candidates(board_state_t* state, int x, int y, int* candidates) {
     int candidate_count = 0;
     int i = 1;
-    int old_val = state->board[x][y].value;
     for (; i <= BOARDSIZE; i++) {
         state->board[y][x].value = i;
         if (is_legal(state)) {
             candidates[candidate_count++] = i;
         }
     }
-    state->board[y][x].value = old_val;
     return candidate_count;
 }
 
@@ -70,7 +68,12 @@ Callback which the backtracker uses to select the index of the next candidate
 typedef int(*candidate_selector_t)(int count);
 
 /*
-Main backtracking implementation.
+Main backtracking implementation - attempt to find a valid solution, scanning
+forward from column `x` of row `y` and enumerating all possibilities. If multiple
+candidates are found for a given cell, `selector` is used to select the index of
+the next one.
+Returns whether a legal solution was found.
+Note: this function may modify the board state even if it returns false.
 */
 static int backtrack_rec(board_state_t *state, int x, int y, candidate_selector_t selector) {
     int candidates[BOARDSIZE];
@@ -98,7 +101,6 @@ static int backtrack_rec(board_state_t *state, int x, int y, candidate_selector_
         candidate_count--;
     }
     
-    state->board[y][x].value = 0;
     return 0;
 }
 
