@@ -1,4 +1,5 @@
 #include "solver.h"
+#include "game.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -115,6 +116,29 @@ static int det_backtrack_selector(int count) {
 
 static int rand_backtrack_selector(int count) {
     return rand() % count; /* Select random untested candidate */
+}
+
+static void populate_fixed_cells(game_state_t* game, int cells) {
+    int i;
+    for (i = 0; i < cells; i++) {
+        int x, y;
+
+        do {
+            x = rand() % BOARDSIZE;
+            y = rand() % BOARDSIZE;
+        } while (game->board_state.board[y][x].fixed);
+
+        game->board_state.board[y][x].value = game->solution.board[y][x].value;
+        game->board_state.board[y][x].fixed = 1;
+    }
+}
+
+void generate(game_state_t* game, int cells) {
+    init_board(&game->board_state);
+    init_board(&game->solution);
+
+    backtrack(&game->solution, rand_backtrack_selector);
+    populate_fixed_cells(game, cells);
 }
 
 int validate(game_state_t *game) {
