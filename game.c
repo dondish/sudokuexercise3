@@ -28,6 +28,7 @@ int is_finished(board_state_t *state) {
 int is_legal(board_state_t *state) {
     int checker[BOARDSIZE] = {0};
     int x,y;
+
     for (x=0;x<BOARDSIZE;x++) { /* columns */
         for (y=0;y<BOARDSIZE;y++) {
             if (state->board[x][y].value && (checker[x] & (1 << state->board[x][y].value))) {
@@ -36,9 +37,8 @@ int is_legal(board_state_t *state) {
             checker[x] |= (1 << state->board[x][y].value);
         }
     }
-    for (x=0;x<BOARDSIZE;x++) {
-        checker[x] = 0;
-    }
+
+    memset(checker, 0, sizeof(checker));
     for (x=0;x<BOARDSIZE;x++) { /* rows */
         for (y=0;y<BOARDSIZE;y++) {
             if (state->board[y][x].value && (checker[x] & (1 << state->board[y][x].value))) {
@@ -48,10 +48,7 @@ int is_legal(board_state_t *state) {
         }
     }
 
-    for (x=0;x<BOARDSIZE;x++) {
-        checker[x] = 0;
-    }
-
+    memset(checker, 0, sizeof(checker));
     for (x=0;x<BOARDSIZE;x++) { /* blocks */
                                 /* The x represents the block, like a phone 
                                 x/y: 0 1 2
@@ -76,11 +73,17 @@ int is_legal(board_state_t *state) {
                                      0 1 2
                                 */
         for (y=0;y<BOARDSIZE;y++) {
-            if (state->board[(x-(x%SQRT_BOARDSIZE))+(y-(y%SQRT_BOARDSIZE))/SQRT_BOARDSIZE][(x%SQRT_BOARDSIZE)*SQRT_BOARDSIZE+y%SQRT_BOARDSIZE].value 
-            && (checker[x] & (1 << state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value))) {
+            int val = state
+                        ->board[(x - (x % SQRT_BOARDSIZE)) +
+                                (y - (y % SQRT_BOARDSIZE)) / SQRT_BOARDSIZE]
+                                [(x % SQRT_BOARDSIZE) * SQRT_BOARDSIZE +
+                                y % SQRT_BOARDSIZE]
+                        .value;
+            int mask = 1 << val;
+            if (val && (checker[x] & mask)) {
                 return 0;
             }
-            checker[x] |= (1 << state->board[(x-(x%3))+(y-(y%3))/3][(x%3)*3+y%3].value);
+            checker[x] |= mask;
         }
     }
     return 1;
